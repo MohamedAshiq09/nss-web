@@ -8,25 +8,29 @@ import Link from 'next/link';
 import { DynamicWidget } from '@dynamic-labs/sdk-react-core';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleMouseEnter = (link) => setHoveredLink(link);
+  interface NavbarProps {
+    link: string;
+  }
+
+  const handleMouseEnter = (link: NavbarProps['link']) => setHoveredLink(link);
   const handleMouseLeave = () => setHoveredLink(null);
 
   return (
     <>
       <header className="fixed top-0 left-0 w-full h-[11vh] bg-white bg-opacity-80 backdrop-blur-lg shadow-lg z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-full">
-          {/* Logo Positioned at the Left Corner */}
+          {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="hover:opacity-80 transition flex items-center">
               <Image
-                src="/logo.png" // Replace with your furniture shop logo
+                src="/logo.png"
                 alt="Furniture Shop Logo"
                 width={80}
                 height={80}
@@ -35,7 +39,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation Centered */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8 ml-28">
             <div
               onMouseEnter={() => handleMouseEnter('home')}
@@ -90,12 +94,12 @@ export default function Navbar() {
             </div>
           </nav>
 
-          {/* Right Corner with DynamicWidget (optional) */}
+          {/* Right Side Widget */}
           <div className="hidden md:flex items-center space-x-4">
             <DynamicWidget />
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
@@ -110,7 +114,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Fixed Gradient Line */}
+        {/* Animated Gradient Line */}
         <motion.div
           className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-400 to-transparent"
           initial={{ x: '-100%' }}
@@ -130,7 +134,7 @@ export default function Navbar() {
         />
       </header>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -169,7 +173,6 @@ export default function Navbar() {
               Contact
             </Link>
 
-            {/* Dynamic Widget (optional) visible only in mobile */}
             <div className="mt-8">
               <DynamicWidget />
             </div>
